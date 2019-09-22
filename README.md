@@ -1,5 +1,5 @@
 # state_author.sh
-## Download All .rwl Files for a State from NOAA NCEI and find the files authored by Ed Cook.
+## Download All .rwl Files for a State from NOAA NCEI and find the files containing a given author.
 
 The attached script "state_author.sh" can be used to download Tree Ring Data from NOAA's Database and find the files authored a given person (e.g. Ed Cook). The users only needs to input the initials of the State that she wants to download and the author's last name in quotation marks.  
 
