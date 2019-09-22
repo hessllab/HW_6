@@ -15,7 +15,7 @@ To run the file the user should open the Bash terminal and input the following c
 ```{Bash}
 bash state_author.sh $1 $2
 ```
-Where ```$1``` refers to the initial in lowercase letters of the State that is to be downloaded (e.g. ny for New York, or wv for West Virginia); and ```'$2'``` refers to the author's last name to query. 
+Where ```$1``` refers to the initial in lowercase letters of the State that is to be downloaded (e.g. ny for New York, or wv for West Virginia); and ```$2``` refers to the author's last name to query. 
 For example: ``` bash state_author.sh ny 'Cook'``` will download all the files from NY state and then give information of which files where authored by Cook. 
 
 ## Products:
@@ -24,6 +24,9 @@ For example: ``` bash state_author.sh ny 'Cook'``` will download all the files f
 3) A text file named after the state abbreviation followed by "sites". The text file will list all the downloaded file names without their extention and a line that includes (but not in every case) the site where the data was collected.  
 4) A text file named 'Author_files.txt' which contains a sorted list of the file names that have the author queried by the user. The list is sorted by the number of lines contained in each file. 
 
+Note: The Author's name must be submitted within quotation marks. Author's with the same last name will be read as the same author (Pull request if you know how to improve that part). 
+
+Luis Andres Guillen
 
 
 
