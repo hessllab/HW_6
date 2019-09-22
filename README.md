@@ -1,21 +1,28 @@
-### Finding Ed Cook 
-Problem: Cynthia has noticed that Ed Cook's ITRDB files always include headers and include some great data.  She would like to know if Ed Cook collected any data she can use in NY. She is wise and plans to use her existing _state.sh_ script to download the data from NY, then use `grep` and `find` to make a list of Ed Cook's files.
+# cook_script.sh
+## Download All .rwl Files for a State from NOAA NCEI and find the files authored by Ed Cook.
 
+The attached script "cook_script.sh" can be used to download Tree Ring Data from NOAA's Database and find the files authores by Ed Cook. The users only needs to input the initials of the State that she wants to download. 
 
-#### Objective: 
-1)	Extract all the _.rwl_ data files for New York state from the ITRDB using _state.sh_.
-2)	Use `grep`, `cut` and `$()` to make a text file called _CookFiles.txt_ that lists the names of the files Ed Cook contributed to in New York, listed in order of the length of the file in lines. Try using `sed` to eliminate the last line of "totals". 
+## Requirements
+- Connection to internet. 
+- Instalation of Git Bash. 
+- Instalation of `wget`. 
+- Enough space to save files in the selected directory.
 
+## Usage
 
-Update your previous _README.md_ file from HW_5 with an example of how to use your _state.sh_ script in combination with other __bash__ commands to create _CookFiles.txt_.  If you made any changes to your _state.sh_, please update that script as well.
+To run the file the user should open the Bash terminal and input the following code
+```{Bash}
+bash cook_script.sh $1
+```
+Where ```$1``` refers to the initial in lowercase letters of the State that is to be downloaded (e.g. ny for New York, or wv for West Virginia). 
 
-_Check out this [resource](https://gist.github.com/jxson/1784669) for _README.md_ suggestions._
+## Products:
+ 1) The creation of a folder named after the initials of the state inputted. The folder will be located in the directory where the cook_script.sh is located. 
+2) Donwloading all the ```.rwl``` files with data from that State, except files containing the word "noaa".
+3) A text file named after the state abbreviation followed by "sites". The text file will list all the downloaded file names without their extention and a line that includes (but not in every case) the site where the data was collected.  
+4) A text file named 'Cookfiles.txt' which contains a sorted list of the file names that have Ed Cook as author. The list is sorted by the number of lines contained in each file. 
 
-#### What to Submit:
-1) _README.md_ updated from HW_5 with new example that creates _CookFiles.txt_
-2) _states.sh_ 
-
-#### Submit using the fork-clone-branch-commit-pull_request strategy.
 
 
 
