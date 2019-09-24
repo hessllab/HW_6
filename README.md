@@ -1,25 +1,53 @@
-### Finding Ed Cook 
-Problem: Cynthia has noticed that Ed Cook's ITRDB files always include headers and include some great data.  She would like to know if Ed Cook collected any data she can use in NY. She is wise and plans to use her existing _state.sh_ script to download the data from NY, then use `grep` and `find` to make a list of Ed Cook's files.
+### Homework 5
+### Sara Schreder-Gomes
+____________
+
+### Requirements
+
+1) Internet connection
+2) Installation of Git Bash
+3) Installation of wget
+
+### Usage
+
+With the basic bash script the user will be able to pull and summarize data from one state of tree ring data at a time using: `bash state.sh "state_abbrev"`
+
+The state abbreviation will be two letters, in lowercase. For this case, we want New York's tree ring data so we will use the abbreviation `ny`. The script also aims to reduce clutter by creating a directory to hold the individual state directories.
+`bash state.sh "ny"`
+
+The bash script in state.sh will make a new directory for New York and only pull the files without the "-noaa.rwl" ending. The script also contains the loop that from the previous exercise that creates a text file with a listof the sitename and first line of the file. This may be helpful to spot check accuracy. 
 
 
-#### Objective: 
-1)	Extract all the _.rwl_ data files for New York state from the ITRDB using _state.sh_.
-2)	Use `grep`, `cut` and `$()` to make a text file called _CookFiles.txt_ that lists the names of the files Ed Cook contributed to in New York, listed in order of the length of the file in lines. Try using `sed` to eliminate the last line of "totals". 
+```bash
+cd ITRDB_by_state/ny
+wc -l $(grep -l "Cook" ny*.rwl) | sort | sed '$d' | cut -c 10- >> CookFiles.txt
+```
+This code changes to the appropriate working direcotry before running a line cound on the files pulled from the grep. The `-l` flag in the grep retrieves only the filenames that contain the argument. Then, the `sed` command  deletes the last line that contains the line count totals, then it pipes to a cut that leaves only the filenames. The list is pushed to a text file that lists only the data submitted by Ed Cook. This section can be modified with variables to pull from any state for any author. 
+
+### Products
+
+The output of script is a list of files for New York that were submitted by a specific contributor, in descending order by line count. 
+
+```
+ny028.rwl
+ny025.rwl
+ny040.rwl
+ny027.rwl
+ny042.rwl
+ny038.rwl
+ny023.rwl
+ny015.rwl
+ny029.rwl
+ny041.rwl
+```
+
+### Resources
+
+All data used for this script can be found online through NOAA, at: https://www1.ncdc.noaa.gov/pub/data/paleo/treering/measurements/northamerica/usa/
 
 
-Update your previous _README.md_ file from HW_5 with an example of how to use your _state.sh_ script in combination with other __bash__ commands to create _CookFiles.txt_.  If you made any changes to your _state.sh_, please update that script as well.
+### Author
 
-_Check out this [resource](https://gist.github.com/jxson/1784669) for _README.md_ suggestions._
+Sara Schreder-Gomes
 
-#### What to Submit:
-1) _README.md_ updated from HW_5 with new example that creates _CookFiles.txt_
-2) _states.sh_ 
-
-#### Submit using the fork-clone-branch-commit-pull_request strategy.
-
-
-
-
-
-
-
+ 
