@@ -1,7 +1,6 @@
-# ITRDB script for any state
-Goal of this assignment was to optimize the script from HW_4 so that it can run for any data
-in the ITRDB. In addition this script will create a new directory for any given state and 
-place all respective files into this new directory.
+# Finding Ed Cook Script
+Goal of this assignment is use the existing script from HW_5 to pull all .rwl files from NY. Specifically, files from Ed Cook
+contain excellent data and headers, so we want to isolate all the files from NY that are from Ed Cook.
 
 ## Part 1
 ```
@@ -21,35 +20,26 @@ while excluding any files that contained noaa in their names.
 
 ## Part 3
 ```
-for sitename in "$1"*.rwl
-do
-  echo $sitename | cut -d '.' -f 1 >> "$1"_sites.txt
-  head -n 1 $sitename >> "$1"_sites.txt
-done
+wc -l $(grep -i -l 'cook' *.rwl) | sort | sed /total/d | cut -d '.' -f 1 > CookFiles.txt
 ```
-This for loop reports the sitename and first line from the header of each rwl file from a specificed state into a new text file named
-sites.txt. It ultilizes the cut command and uses the period as a delimiter along with " -f 1 " to report anything that comes
-before the period. This loop will work for any state, again as the wildcard $1 can be subsituted for any state abbreviation.
+Once the data files from NY were downloaded, the line of code above was used to select any files from NY that contained the word "cook"
+in them to match them to Ed Cooks name. The -i flag was used to make cook non-case sensitive. The line of code then listed all of the files from NY that matched "Ed Cook" and sorted them my line count from lowest number of lines to highest number of lines. The sorted files were then placed into a new text file named CookFiles.txt which excluded the file extensions and total line count for all the files. 
+
+The loop used in HW_5 was no needed in this challenge because we knew by default that any files with "Ed Cook" would have good header data and the point of the loop from the last assignment was to determine which files had headers and which did not. We also only cared about the filename from the NY files as well.
 
 ## Results
-The textfile that is created for any given state reports the sitename along with the first line from the header. This textfile
-along with all repspective rwl files for that state are placed into a directory for that state. An example of the text file created
-for West Virginia is shown below.
+The textfile (CookFiles.txt) that is created for files by Ed Cook are shown below. The files are listed in order of shortest line count to longest line count. From the files downloaded from NY only, 10 files were reported by Ed Cook.
 ```
-wv001
-020011  1796   107   100   107   131                                    
-wv002
-065031  1793   127   115   105   152   159   231   159                  
-wv003
-067011  1876   331   225   550   437
-wv004
-NERI   1 New River Gorge                                     PIVI               
-wv005
-CKMKBK 1 Cedar/Moser/Bible Knobs                             JUVI               
-wv006
-PIPE   1 Pipestem Resort State Park                          TSCA               
-wv007
-CAGO   1 Cabwaylingo State Forest                            TSCA      
+   186 ny028
+   278 ny025
+   292 ny040
+   357 ny027
+   368 ny042
+   512 ny038
+   515 ny023
+   554 ny015
+   579 ny029
+   767 ny041     
 ```
 ## Usage
 Usage: bash states.sh wv (or any other state(s))
