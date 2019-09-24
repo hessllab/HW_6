@@ -1,25 +1,52 @@
-### Finding Ed Cook 
-Problem: Cynthia has noticed that Ed Cook's ITRDB files always include headers and include some great data.  She would like to know if Ed Cook collected any data she can use in NY. She is wise and plans to use her existing _state.sh_ script to download the data from NY, then use `grep` and `find` to make a list of Ed Cook's files.
+### ITRDB Script for Any State PLUS Example for how to find all files by Ed Cook
+Zack Grzywacz
 
+#### State.sh
 
-#### Objective: 
-1)	Extract all the _.rwl_ data files for New York state from the ITRDB using _state.sh_.
-2)	Use `grep`, `cut` and `$()` to make a text file called _CookFiles.txt_ that lists the names of the files Ed Cook contributed to in New York, listed in order of the length of the file in lines. Try using `sed` to eliminate the last line of "totals". 
+For this script, the user must add the state abbreviation after typing "bash state.sh". This makes the state abbreviation take the spot of "$1" in the code. We will start by making and entering a new directory, so that the paths are absolute and can be replicated anywhere.
+```
+# Download tree ring data for any US State  
+# Usage: bash state.sh state_abbreviation  
+mkdir "$1"_trees
+cd "$1"_trees
+```
 
+Next, we will gather the data with wget. This uses two wget requests because some state codes have an extra letter at the end - yet we do not want the files that contain "-noaa". So we use ? wildcards instead of *.
+```
+wget -r -e robots=off -A "$1"???.rwl -np -nd https://www1.ncdc.noaa.gov/pub/data/paleo/treering/measurements/northamerica/usa/
+wget -r -e robots=off -A "$1"????.rwl -np -nd https://www1.ncdc.noaa.gov/pub/data/paleo/treering/measurements/northamerica/usa/
+```
 
-Update your previous _README.md_ file from HW_5 with an example of how to use your _state.sh_ script in combination with other __bash__ commands to create _CookFiles.txt_.  If you made any changes to your _state.sh_, please update that script as well.
+Now, we will use a loop to print the site name and first line of each file to a .txt file. Note that only the first five characters are cut from the filename - this leaves off any extra letters at the end of the files that are formatted like "az544t.rwl". I do this assuming that the letter 't' is not a part of the site name.
+```
+for filename in *.rwl
+ do
+  ls "$filename" | cut -c 1-5 >> "$1"_sites.txt
+  head -n 1 "$filename" >> "$1"_sites.txt
+ done
+```
 
-_Check out this [resource](https://gist.github.com/jxson/1784669) for _README.md_ suggestions._
+#### Finding Ed Cook
 
-#### What to Submit:
-1) _README.md_ updated from HW_5 with new example that creates _CookFiles.txt_
-2) _states.sh_ 
+First, we will use state.sh to collect all New York files from the database.
 
-#### Submit using the fork-clone-branch-commit-pull_request strategy.
+```
+bash state.sh ny
+```
+For ease, I will enter the new directory I just created
+```
+cd ny_trees
+```
+Next, we must use a command that finds all files by Ed Cook (through grep), lists the filenames (find), lists line counts, cuts characters, and sorts by line count.
+```
+wc -l $(grep -i -w "Cook" $(find . -name '*.rwl') | cut -c 3-11) | head -n 10 | sort -n >> CookFiles.txt
+```
 
-
-
-
-
+In this line of code, 'find' operates first by finding all the .rwl files in the directory.  
+Next, 'grep' lists all of the files and lines that contain "Cook". I used "Cook" instead of "Ed Cook" because it appears that his name is sometimes shortened to E. Cook.  
+Then, 'cut -c 3-11' cuts away at the line of text until only the filename remains - luckily, here all of the filenames contain the same number of characters  
+Next, 'wc -l' adds the number of lines in each file directly in front of the filename.  
+'head -n 10' removes the "Total" line at the bottom.  
+Finally, 'sort -n' sorts the files by the number of lines, and '>> CookFiles.txt' creates a file and appends this information within it.
 
 
