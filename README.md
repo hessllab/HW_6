@@ -26,7 +26,7 @@ Here is an example output using `bash state.sh ak`
 ![HW_5_example](HW_5_example.jpg)
 
 After the New York files have been downloaded, it's time to search for ones with the author Ed Cook.
-#Set your New York folder as the current directory
+Set your New York folder as the current directory
 ```bash
 cd ny
 ```
@@ -34,6 +34,7 @@ cd ny
 ```bash
 wc -l $(grep -w -i 'Cook' -l *.rwl) | sort | grep -v total > CookFiles.txt 
 ```
+![HW6_example](HW6_example.png)
 
 
 
