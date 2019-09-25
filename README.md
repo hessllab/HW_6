@@ -1,21 +1,41 @@
-### Finding Ed Cook 
-Problem: Cynthia has noticed that Ed Cook's ITRDB files always include headers and include some great data.  She would like to know if Ed Cook collected any data she can use in NY. She is wise and plans to use her existing _state.sh_ script to download the data from NY, then use `grep` and `find` to make a list of Ed Cook's files.
+# Caleb Malay HW_6
+
+Creates directory to store downloaded tree ring data using `$1` as a variable for the state abbreviations. 
+```bash
+mkdir "$1"
+cd "$1"
+```
+
+Uses wget to download state tree ring data ending with `.rwl` and uses `-R` to exclude downloading files that contain `noaa` in the name.
+Using `"$1"*.rwl` uses a variable to also include files that may have a letter at the end of their name. 
+```bash
+wget -r -q -A "$1"*.rwl -R '*noaa*' -e robots=off -np -nd https://www1.ncdc.noaa.gov/pub/data/paleo/treering/measurements/northamerica/usa/
+```
+
+Uses a `for loop` to print the file name then uses `.` as the delimeter and `-f 1` to select the first column as well as taking the first
+line of each file and sending it to a text file. Placing `"$1"` in front of the text file name allows for the desired state's abbreviation
+to be placed before `_sites.txt.`
+```bash
+for filename in *.rwl
+  do
+    echo "$filename" | cut -d '.' -f 1 >> "$1"_sites.txt
+    head -n 1 "$filename" >> "$1"_sites.txt
+  done
+```
+Here is an example output using `bash state.sh ak`
+![HW_5_example](HW_5_example.jpg)
+
+After the New York files have been downloaded, it's time to search for ones with the author Ed Cook.
+#Set your New York folder as the current directory
+```bash
+cd ny
+```
+#This script gets the word count of the files with the author Cook. The -i flag will make it non-case sensitive. Using grep, I was able to cut the line with the total from the result. The final result is sent to a text file.
+```bash
+wc -l $(grep -w -i 'Cook' -l *.rwl) | sort | grep -v total > CookFiles.txt 
+```
 
 
-#### Objective: 
-1)	Extract all the _.rwl_ data files for New York state from the ITRDB using _state.sh_.
-2)	Use `grep`, `cut` and `$()` to make a text file called _CookFiles.txt_ that lists the names of the files Ed Cook contributed to in New York, listed in order of the length of the file in lines. Try using `sed` to eliminate the last line of "totals". 
-
-
-Update your previous _README.md_ file from HW_5 with an example of how to use your _state.sh_ script in combination with other __bash__ commands to create _CookFiles.txt_.  If you made any changes to your _state.sh_, please update that script as well.
-
-_Check out this [resource](https://gist.github.com/jxson/1784669) for _README.md_ suggestions._
-
-#### What to Submit:
-1) _README.md_ updated from HW_5 with new example that creates _CookFiles.txt_
-2) _states.sh_ 
-
-#### Submit using the fork-clone-branch-commit-pull_request strategy.
 
 
 
