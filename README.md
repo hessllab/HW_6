@@ -30,7 +30,7 @@ Set your New York folder as the current directory
 ```bash
 cd ny
 ```
-This script gets the word count of the .rwl files with the author Cook. The -i flag will make it non-case sensitive. The data is then sorted. Using grep, I was able to cut the line with the total from the result. The final result is sent to a text file.
+This script gets the word count of the `.rwl` files with the author Cook. The `-i` flag will make it non-case sensitive. The data is then sorted. Using `grep`, I was able to cut the line with the `total` from the result. The final result is sent to a text file.
 ```bash
 wc -l $(grep -w -i 'Cook' -l *.rwl) | sort | grep -v total > CookFiles.txt 
 ```
