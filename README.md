@@ -1,4 +1,4 @@
-# Script To Retrieve Tree Ring data
+# Script To Retrieve Tree Ring data and Select Ed Cook's files
 
 This script downloads tree ring data for specified states in the USA from the NOAA's National Centers for Environmental Information database and organizes this information in a new directory called the abbreviation of the state. To check for files that have a header, this script also creates a text file and saves the name of each files in the state with the respective first line of the file.
 
@@ -28,15 +28,12 @@ for sitename in *.rwl
         
         head -n 1 $sitename >> "$1"_sites.txt #writes the first line of the .rwl file to the textfile
 done
-```
 
-```
 wc -l $(grep -i "Cook" -l *.rwl) | sort | sed -e '/total/d' >> CookFiles.txt
 
 sed "s/^[ \t]*//" -i CookFiles.txt  #remove the preceding white spaces in the line
-
-cut -d " " -f 2 CookFiles.txt > CookFiles.txt #returns only the file name
 ```
+
 ## Product
 The script creates a new directory called the state abbreviation. 
 for example; if the state is __West Virginia__, the name of the directory created will be __wv__
