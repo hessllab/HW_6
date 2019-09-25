@@ -1,6 +1,6 @@
-# Script To Retrieve Tree Ring data and Select Ed Cook's files
+# Script To Retrieve Tree Ring data and Searches for files written by Ed Cook
 
-This script downloads tree ring data for specified states in the USA from the NOAA's National Centers for Environmental Information database and organizes this information in a new directory called the abbreviation of the state. To check for files that have a header, this script also creates a text file and saves the name of each files in the state with the respective first line of the file.
+This script downloads tree ring data for specified states in the USA from the NOAA's National Centers for Environmental Information database and organizes this information in a new directory called the abbreviation of the state. To check for files that have a header, this script also creates a text file and saves the name of each files in the state with the respective first line of the file. The script then searches for files written by Ed Cook in the downloaded directory, counts the number of lines in these files, sorts it and then saves this info in a new text file called CookFiles.txt
 
 ## Prerequisites
 
@@ -29,6 +29,7 @@ for sitename in *.rwl
         head -n 1 $sitename >> "$1"_sites.txt #writes the first line of the .rwl file to the textfile
 done
 
+#searches for the files Ed Cook contributed to in New York, listed in order of the length of the file in lines and stores the names of those files in a text file called CookFiles.txt
 wc -l $(grep -i "Cook" -l *.rwl) | sort | sed -e '/total/d' >> CookFiles.txt
 ```
 
@@ -74,18 +75,18 @@ TVW    1 Goose Egg Ridge                                     QUAL
 ny017
 TVP    1 Goose Egg Ridge                                     QUPR               
 ```
-`wc -l $(grep -i "Cook" -l *.rwl) | sort | sed -e '/total/d' >> CookFiles.txt` in the script searches for the files written be Ed Cook, returns the number of lines in the files, sorts it and the stores this info in a new text file called "CooFiles.txt" excluding the total that usually accompanies the `wc -l` command. The result of the text file is:
+`wc -l $(grep -i "Cook" -l *.rwl) | sort | sed -e '/total/d' >> CookFiles.txt` in the script searches for the files written by Ed Cook, returns the number of lines in the files, sorts it and then stores this info in a new text file called "CookFiles.txt" excluding the total that usually accompanies the `wc -l` command. The result of the text file is:
 ```
-186 ny028.rwl
-278 ny025.rwl
-292 ny040.rwl
-357 ny027.rwl
-368 ny042.rwl
-512 ny038.rwl
-515 ny023.rwl
-554 ny015.rwl
-579 ny029.rwl
-767 ny041.rwl
+   186 ny028.rwl
+   278 ny025.rwl
+   292 ny040.rwl
+   357 ny027.rwl
+   368 ny042.rwl
+   512 ny038.rwl
+   515 ny023.rwl
+   554 ny015.rwl
+   579 ny029.rwl
+   767 ny041.rwl
 ```
 
 ## Author
