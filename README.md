@@ -30,6 +30,13 @@ for sitename in *.rwl
 done
 ```
 
+```
+wc -l $(grep -i "Cook" -l *.rwl) | sort | sed -e '/total/d' >> CookFiles.txt
+
+sed "s/^[ \t]*//" -i CookFiles.txt  #remove the preceding white spaces in the line
+
+cut -d " " -f 2 CookFiles.txt > CookFiles.txt #returns only the file name
+```
 ## Product
 The script creates a new directory called the state abbreviation. 
 for example; if the state is __West Virginia__, the name of the directory created will be __wv__
