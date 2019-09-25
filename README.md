@@ -1,25 +1,29 @@
-### Finding Ed Cook 
-Problem: Cynthia has noticed that Ed Cook's ITRDB files always include headers and include some great data.  She would like to know if Ed Cook collected any data she can use in NY. She is wise and plans to use her existing _state.sh_ script to download the data from NY, then use `grep` and `find` to make a list of Ed Cook's files.
+## HW 6: Finding Ed Cook 
+The purpose of this assignment is to find all New York files from the ITRDB that have been collected by Ed Cook. 
 
+#### Downloading the state data
+A states.sh file is attached with the purpose of extracting any of the .rwl files for the ITRDB.
 
-#### Objective: 
-1)	Extract all the _.rwl_ data files for New York state from the ITRDB using _state.sh_.
-2)	Use `grep`, `cut` and `$()` to make a text file called _CookFiles.txt_ that lists the names of the files Ed Cook contributed to in New York, listed in order of the length of the file in lines. Try using `sed` to eliminate the last line of "totals". 
+To achieve this, wget is used to recursively download all the .rwl files from the url, excluding those with noaa in them.
+`wget -r -e robots=off -A $@'*.rwl' -R *noaa* -np -nd https://www1.ncdc.noaa.gov/pub/data/paleo/treering/measurements/northamerica/usa/`
 
+The function can then be used, with New York as an example, with the following code:
+` bash states.sh ny`
 
-Update your previous _README.md_ file from HW_5 with an example of how to use your _state.sh_ script in combination with other __bash__ commands to create _CookFiles.txt_.  If you made any changes to your _state.sh_, please update that script as well.
+__Note that the states.sh file has additional functionality in the form of a for loop that is not directly related to this task. 
 
-_Check out this [resource](https://gist.github.com/jxson/1784669) for _README.md_ suggestions._
+#### Searching for Ed
+The purpose of the next script is to find all files collected by Ed Cook. The script was written search just for someone with "Cook" in the name, but due to how common the name is, I decided to narrow my search.
 
-#### What to Submit:
-1) _README.md_ updated from HW_5 with new example that creates _CookFiles.txt_
-2) _states.sh_ 
+The script as a whole is as follows:
+`wc -l $(grep -w 'Ed Cook' -l *.rwl) | sort | grep -v total  >> CookFiles.txt`
 
-#### Submit using the fork-clone-branch-commit-pull_request strategy.
+Working through the pipe, this script first searches for all .rwl files from Ed Cook and does produces a word count in the first pipe, `wc -l $(grep -w 'Ed Cook' -l *.rwl)`. Next, `sort` is used to sort by file length. Lastly, grep and the -v flag is used in combination with 'total' to remove the last line, total, which is the total line count, with `grep -v total  >> CookFiles.txt`
 
-
-
-
-
-
-
+The end result is as follows:
+```bash
+   278 ny025.rwl
+   357 ny027.rwl
+   186 ny028.rwl
+   579 ny029.rwl
+   ```
