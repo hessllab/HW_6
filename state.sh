@@ -12,6 +12,5 @@ for sitename in *.rwl
         head -n 1 $sitename >> "$1"_sites.txt #writes the first line of the .rwl file to the textfile
 done
 
+#searches for the files Ed Cook contributed to in New York, listed in order of the length of the file in lines and stores the names of those files in a text file called CookFiles.txt
 wc -l $(grep -i "Cook" -l *.rwl) | sort | sed -e '/total/d' >> CookFiles.txt
-
-sed "s/^[ \t]*//" -i CookFiles.txt  #remove the preceding white spaces in the line
