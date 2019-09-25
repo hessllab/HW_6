@@ -22,7 +22,7 @@ The bash script in state.sh will make a new directory for New York and only pull
 cd ITRDB_by_state/ny
 wc -l $(grep -l "Cook" ny*.rwl) | sort | sed '$d' | cut -c 10- >> CookFiles.txt
 ```
-This code changes to the appropriate working direcotry before running a line cound on the files pulled from the grep. The `-l` flag in the grep retrieves only the filenames that contain the argument. Then, the `sed` command  deletes the last line that contains the line count totals, then it pipes to a cut that leaves only the filenames. The list is pushed to a text file that lists only the data submitted by Ed Cook. This section can be modified with variables to pull from any state for any author. 
+This code changes to the appropriate working direcotry before running a line cound on the files pulled from the grep. The `-l` flag in the grep retrieves only the filenames that contain 'Cook' in the file. Using only 'Cook' instead of 'Ed Cook' allowed the script to include both 'Ed Cook' and 'E. Cook', however it is not ideal if there were to be another contributor with the same last name. Then, the `sed` command  deletes the last line that contains the line count totals, then it pipes to a cut that leaves only the filenames. The list is pushed to a text file that lists only the data submitted by Ed Cook. This section can be modified with variables to pull from any state for any author. 
 
 ### Products
 
