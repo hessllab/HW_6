@@ -30,29 +30,62 @@ for sitename in *.rwl
 done
 
 wc -l $(grep -i "Cook" -l *.rwl) | sort | sed -e '/total/d' >> CookFiles.txt
-
-sed "s/^[ \t]*//" -i CookFiles.txt  #remove the preceding white spaces in the line
 ```
 
 ## Product
 The script creates a new directory called the state abbreviation. 
-for example; if the state is __West Virginia__, the name of the directory created will be __wv__
+for example; if the state is __New York__, the name of the directory created will be __ny__
 
 In this directory, the script stores all the retrieved .rwl files for that state.
 
-Then the script produces a text file of site names followed by the first line (header) of the file:
+Then the for loop in the script produces a text file of site names followed by the first line (header) of the file:
 
 ```
-wv001
-020011  1796   107   100   107   131                                    
-wv002
-065031  1793   127   115   105   152   159   231   159                  
-wv003
-067011  1876   331   225   550   437
-wv004
-NERI   1 New River Gorge                                     PIVI               
-wv005
-CKMKBK 1 Cedar/Moser/Bible Knobs                             JUVI               
+ny
+140-1  1 RAQUETTE LAKE
+ny001
+046011  1710    10    10    17    12    13    12     2    10     7     8
+ny002
+017021  1713   116    94   111   133    82    67    85                  
+ny003
+367011  1821   176   142    90   109    80    53    68    45    64      
+ny005
+420112  1745    33    21    30    60    35    24                        
+ny006
+118011  1678   171   139                                                
+ny008
+018011  1666    45    46    63    67
+ny009
+024011  1661    60    57    71    64    60    42    60    58    59      
+ny010
+023011  1753     8     7    10    18    10    16    16                  
+ny011
+RR0021  1695    85    26    41    45    52                              
+ny012
+117011  1695    64    55    55    37    39                              
+ny013
+042031  1719    41                                                      
+ny014
+040011  1714   250   239   263   177   145   164                        
+ny015
+MIDDLE 1 Middleburgh                                         JUVI               
+ny016
+TVW    1 Goose Egg Ridge                                     QUAL               
+ny017
+TVP    1 Goose Egg Ridge                                     QUPR               
+```
+`wc -l $(grep -i "Cook" -l *.rwl) | sort | sed -e '/total/d' >> CookFiles.txt` in the script searches for the files written be Ed Cook, returns the number of lines in the files, sorts it and the stores this info in a new text file called "CooFiles.txt" excluding the total that usually accompanies the `wc -l` command. The result of the text file is:
+```
+186 ny028.rwl
+278 ny025.rwl
+292 ny040.rwl
+357 ny027.rwl
+368 ny042.rwl
+512 ny038.rwl
+515 ny023.rwl
+554 ny015.rwl
+579 ny029.rwl
+767 ny041.rwl
 ```
 
 ## Author
