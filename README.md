@@ -1,5 +1,5 @@
 ### Finding Authors on ITRDB 
-Problem: Cynthia has noticed that certain authors make excellent collections on the NCEI ITRDB.  She would like to develop a script that will pull all the ITRDB files for a single author in a single state.  For example, all of the files Ed Cook contributed to in NY. She is wise and plans to start by using her existing _state.sh_ script to download the data from NY, then use `grep` and `find` to make a list of Ed Cook's files.  Once she is successful, she will generalize her script for any state and any author.
+Problem: Cynthia has noticed that certain authors make excellent collections on the NCEI ITRDB.  She would like to develop a script that will pull all the ITRDB files for a single author in a single state.  For example, she would like to download and review all of the files Ed Cook contributed to in NY. She is wise and plans to start by using her existing _state.sh_ script to download the data from NY, then use `grep` and `find` to make a list of Ed Cook's files.  Once she is successful, she will generalize her script for any state and any author.
 
 
 #### Objective: 
