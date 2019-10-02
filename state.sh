@@ -9,5 +9,4 @@ do
   echo  >> "$1"_sites.txt
 done
 
-cd ../ITRDB_by_state/ny
 wc -l $(grep -l "Cook" ny*.rwl) | sort | sed '$d' | cut -c 10- >> CookFiles.txt
